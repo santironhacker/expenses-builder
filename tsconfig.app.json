@@ -11,5 +11,7 @@
   ],
   "include": [
     "src/**/*.d.ts"
-  ]
+  ],
+  "directive-selector": [true, "attribute", "eb", "camelCase"],
+  "component-selector": [true, "element", "eb", "kebab-case"],
 }
