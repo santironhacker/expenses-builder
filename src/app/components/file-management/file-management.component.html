@@ -1,2 +1,3 @@
 <p>file-management works!</p>
+<eb-files-list [uploadedFiles]="uploadedFiles$ | async"></eb-files-list>
 <eb-upload-button (fileUpload)="onFileUpload($event)"></eb-upload-button>

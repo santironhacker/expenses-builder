@@ -7,12 +7,14 @@ import { UploadButtonComponent } from './components/upload-button/upload-button.
 import { FileManagementComponent } from './components/file-management/file-management.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
+import { FilesListComponent } from './components/files-list/files-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UploadButtonComponent,
-    FileManagementComponent
+    FileManagementComponent,
+    FilesListComponent
   ],
   imports: [
     BrowserModule,

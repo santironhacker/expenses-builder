@@ -1,0 +1,6 @@
+<p>files-list works!</p>
+<div *ngIf="uploadedFiles?.length">
+  <article *ngFor="let file of uploadedFiles">
+    <span>{{ file.name }}</span>
+  </article>
+</div>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { FileManagerService } from 'src/app/services/file-manager.service';
 
 @Component({
   selector: 'eb-file-management',
@@ -6,14 +8,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./file-management.component.scss']
 })
 export class FileManagementComponent implements OnInit {
+  uploadedFiles$: Observable<File[] | null>;
 
-  constructor() { }
+  constructor(
+    private fileManagerService: FileManagerService,
+  ) {
+    this.uploadedFiles$ = this.fileManagerService.uploadedFiles$;
+  }
 
-  ngOnInit(): void {
+  ngOnInit(
+  ): void {
   }
 
   public onFileUpload(file: File) {
     console.log('file', file);
+    this.fileManagerService.addNewFile(file);
 
     // Later: for cloud upload
     // const formData = new FormData();
