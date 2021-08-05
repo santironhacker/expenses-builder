@@ -7,6 +7,7 @@ import { UploadButtonComponent } from './components/upload-button/upload-button.
 import { FileManagementComponent } from './components/file-management/file-management.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 import { FilesListComponent } from './components/files-list/files-list.component';
 
 @NgModule({
@@ -21,6 +22,7 @@ import { FilesListComponent } from './components/files-list/files-list.component
     AppRoutingModule,
     BrowserAnimationsModule,
     MatIconModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

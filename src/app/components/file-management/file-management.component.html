@@ -1,3 +1,7 @@
-<p>file-management works!</p>
-<eb-files-list [uploadedFiles]="uploadedFiles$ | async"></eb-files-list>
-<eb-upload-button (fileUpload)="onFileUpload($event)"></eb-upload-button>
+<section class="section-container">
+  <mat-card>
+    <h3>Uploaded files</h3>
+    <eb-files-list [uploadedFiles]="uploadedFiles$ | async"></eb-files-list>
+  </mat-card>
+  <eb-upload-button (fileUpload)="onFileUpload($event)"></eb-upload-button>
+</section>
