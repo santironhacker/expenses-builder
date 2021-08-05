@@ -1,7 +1,6 @@
 <ng-container *ngIf="uploadedFiles?.length; else noFilesUploaded">
   <article *ngFor="let file of uploadedFiles">
-    <mat-icon>file_present</mat-icon>
-    <span>{{ file.name }}</span>
+    <eb-file-item [fileInfo]="file"></eb-file-item>
   </article>
 </ng-container>
 

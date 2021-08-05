@@ -9,13 +9,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { FilesListComponent } from './components/files-list/files-list.component';
+import { FileItemComponent } from './components/file-item/file-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UploadButtonComponent,
     FileManagementComponent,
-    FilesListComponent
+    FilesListComponent,
+    FileItemComponent
   ],
   imports: [
     BrowserModule,

@@ -5,20 +5,16 @@ import { FileManagerService } from 'src/app/services/file-manager.service';
 @Component({
   selector: 'eb-file-management',
   templateUrl: './file-management.component.html',
-  styleUrls: ['./file-management.component.scss']
+  styleUrls: ['./file-management.component.scss'],
 })
 export class FileManagementComponent implements OnInit {
   uploadedFiles$: Observable<File[] | null>;
 
-  constructor(
-    private fileManagerService: FileManagerService,
-  ) {
+  constructor(private fileManagerService: FileManagerService) {
     this.uploadedFiles$ = this.fileManagerService.uploadedFiles$;
   }
 
-  ngOnInit(
-  ): void {
-  }
+  ngOnInit(): void {}
 
   public onFileUpload(file: File) {
     console.log('file', file);
@@ -30,5 +26,4 @@ export class FileManagementComponent implements OnInit {
     // const upload$ = this.http.post("/api/thumbnail-upload", formData);
     // upload$.subscribe();
   }
-
 }
