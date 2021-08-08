@@ -1,9 +1,10 @@
 <mat-icon>file_present</mat-icon>
-<span>{{ fileInfo.name }}</span>
+<span>{{ fileInfo.file.name }}</span>
 <button
   mat-mini-fab
   color="primary"
   class="upload-btn"
+  (click)="onDeleteItem()"
 >
   <mat-icon>delete</mat-icon>
 </button>

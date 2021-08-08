@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { UploadedFile } from 'src/app/models/uploaded-file.model';
 import { FileManagerService } from 'src/app/services/file-manager.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { FileManagerService } from 'src/app/services/file-manager.service';
   styleUrls: ['./file-management.component.scss'],
 })
 export class FileManagementComponent implements OnInit {
-  uploadedFiles$: Observable<File[] | null>;
+  uploadedFiles$: Observable<UploadedFile[] | null>;
 
   constructor(private fileManagerService: FileManagerService) {
     this.uploadedFiles$ = this.fileManagerService.uploadedFiles$;
@@ -25,5 +26,9 @@ export class FileManagementComponent implements OnInit {
     // formData.append("thumbnail", file);
     // const upload$ = this.http.post("/api/thumbnail-upload", formData);
     // upload$.subscribe();
+  }
+
+  onFileDelete(fileIndex: number) {
+    this.fileManagerService.removeFile(fileIndex);
   }
 }

@@ -1,6 +1,13 @@
 <ng-container *ngIf="uploadedFiles?.length; else noFilesUploaded">
-  <article *ngFor="let file of uploadedFiles">
-    <eb-file-item [fileInfo]="file"></eb-file-item>
+  <article
+    *ngFor="let file of uploadedFiles; let i = index"
+    [attr.data-index]="i"
+  >
+    <eb-file-item
+      [fileInfo]="file"
+      [fileIndex]="i"
+      (fileDelete)="onFileDelete($event)"
+    ></eb-file-item>
   </article>
 </ng-container>
 

@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
+import { UploadedFile } from 'src/app/models/uploaded-file.model';
 
 @Component({
   selector: 'eb-file-item',
@@ -6,9 +8,15 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./file-item.component.scss'],
 })
 export class FileItemComponent implements OnInit {
-  @Input() fileInfo: any;
+  @Input() fileInfo!: UploadedFile;
+  @Input() fileIndex!: number;
+  @Output() fileDelete = new EventEmitter<number>();
 
   constructor() {}
 
   ngOnInit(): void {}
+
+  onDeleteItem(): void {
+    this.fileDelete.emit(this.fileIndex);
+  }
 }
