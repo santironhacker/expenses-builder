@@ -34,6 +34,6 @@ export class FileManagerService {
   }
 
   processFileData(uploadedFile: UploadedFile) {
-   this.reportBuilderService.getExpensesReport();
+   this.reportBuilderService.getExpensesReport(uploadedFile.file);
   }
 }
