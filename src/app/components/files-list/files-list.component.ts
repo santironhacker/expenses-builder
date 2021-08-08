@@ -10,6 +10,7 @@ import { UploadedFile } from 'src/app/models/uploaded-file.model';
 export class FilesListComponent implements OnInit {
   @Input() uploadedFiles!: UploadedFile[] | null;
   @Output() fileDelete = new EventEmitter<number>();
+  @Output() processFileData = new EventEmitter<UploadedFile>();
 
   constructor() {}
 
@@ -17,5 +18,9 @@ export class FilesListComponent implements OnInit {
 
   onFileDelete(fileIndex: number) {
     this.fileDelete.emit(fileIndex);
+  }
+
+  onProcessFileData(uploadedFile: UploadedFile): void {
+    this.processFileData.emit(uploadedFile);
   }
 }

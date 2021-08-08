@@ -11,6 +11,7 @@ export class FileItemComponent implements OnInit {
   @Input() fileInfo!: UploadedFile;
   @Input() fileIndex!: number;
   @Output() fileDelete = new EventEmitter<number>();
+  @Output() processFileData = new EventEmitter<UploadedFile>();
 
   constructor() {}
 
@@ -18,5 +19,9 @@ export class FileItemComponent implements OnInit {
 
   onDeleteItem(): void {
     this.fileDelete.emit(this.fileIndex);
+  }
+
+  onProcessFileData(): void {
+    this.processFileData.emit(this.fileInfo);
   }
 }

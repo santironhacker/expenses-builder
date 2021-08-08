@@ -4,6 +4,7 @@
     <eb-files-list
       [uploadedFiles]="uploadedFiles$ | async"
       (fileDelete)="onFileDelete($event)"
+      (processFileData)="onProcessFileData($event)"
     ></eb-files-list>
   </mat-card>
   <eb-upload-button (fileUpload)="onFileUpload($event)"></eb-upload-button>

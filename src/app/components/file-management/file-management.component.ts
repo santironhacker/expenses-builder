@@ -31,4 +31,8 @@ export class FileManagementComponent implements OnInit {
   onFileDelete(fileIndex: number) {
     this.fileManagerService.removeFile(fileIndex);
   }
+
+  onProcessFileData(uploadedFile: UploadedFile): void {
+    this.fileManagerService.processFileData(uploadedFile);
+  }
 }
