@@ -8,10 +8,11 @@ import { UploadedFile } from '../models/uploaded-file.model';
   providedIn: 'root'
 })
 export class ReportBuilderService {
+  private static readonly EXTENSION_SEPARATOR = '.';
+  private static readonly CSV = 'csv';
+
   private processedFiles: ProcessedFile[] = [];
-
   private currentProcessedFileSource = new Subject<ProcessedFile>();
-
   public currentProcessedFile$ = this.currentProcessedFileSource.asObservable();
 
   constructor() { }
@@ -44,23 +45,36 @@ export class ReportBuilderService {
     return this.currentProcessedFile$;
   }
 
-  downloadCSVFromJson(filename: string, csvParserResult: Papa.ParseResult<object>) {
-    // convert JSON to CSV
-    const arrayOfJson: object[] = csvParserResult.data;
-    const headers = csvParserResult.meta.fields;
+  downloadCSVFromJson(uploadedFile: UploadedFile): void {
+    const processedFile = this.findProcessedFileById(uploadedFile.id);
+    if (processedFile) {
+      // convert JSON to CSV
+      const arrayOfJson: object[] = processedFile.papaParseResult.data;
+      const headers = processedFile.papaParseResult.meta.fields;
+      const csv = Papa.unparse({
+        "fields": headers ? headers : [undefined],
+        "data": arrayOfJson
+      }, {});
 
-    const csv = Papa.unparse({
-      "fields": headers ? headers : [undefined],
-      "data": arrayOfJson
-    }, {});
-
-    // Create link and download
-    var link = document.createElement('a');
-    link.setAttribute('href', 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURIComponent(csv));
-    link.setAttribute('download', filename);
-    link.style.visibility = 'hidden';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+      // Create link and download
+      const extensionIndex = uploadedFile.file.name.indexOf(ReportBuilderService.EXTENSION_SEPARATOR);
+      const originalFilename = uploadedFile.file.name.slice(0, extensionIndex);
+      const filename = `${originalFilename}-copy${ReportBuilderService.EXTENSION_SEPARATOR}${ReportBuilderService.CSV}`;
+      var link = document.createElement('a');
+      link.setAttribute('href', 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURIComponent(csv));
+      link.setAttribute('download', filename);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
   };
+
+  findProcessedFileById(fileId: number): ProcessedFile | undefined {
+    return this.processedFiles.find(file => file.uploadedFileId === fileId);
+  }
+
+  findProcessedFileIndexById(fileId: number): number {
+    return this.processedFiles.findIndex(file => file.uploadedFileId = fileId);
+  }
 }

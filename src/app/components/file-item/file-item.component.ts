@@ -12,10 +12,11 @@ export class FileItemComponent implements OnInit {
   @Input() fileIndex!: number;
   @Output() fileDelete = new EventEmitter<number>();
   @Output() processFileData = new EventEmitter<UploadedFile>();
+  @Output() requestReportDownload = new EventEmitter<number>();
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   onDeleteItem(): void {
     this.fileDelete.emit(this.fileIndex);
@@ -23,5 +24,9 @@ export class FileItemComponent implements OnInit {
 
   onProcessFileData(): void {
     this.processFileData.emit(this.fileInfo);
+  }
+
+  onRequestReportDownload(): void {
+    this.requestReportDownload.emit(this.fileIndex);
   }
 }

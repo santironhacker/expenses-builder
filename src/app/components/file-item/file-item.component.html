@@ -18,6 +18,7 @@
   *ngIf="fileInfo.hasReportAvailable"
   mat-mini-fab
   color="primary"
+  (click)="onRequestReportDownload()"
 >
   <mat-icon>file_download</mat-icon>
 </button>

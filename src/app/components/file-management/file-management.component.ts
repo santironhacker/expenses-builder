@@ -15,7 +15,7 @@ export class FileManagementComponent implements OnInit {
     this.uploadedFiles$ = this.fileManagerService.uploadedFiles$;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   public onFileUpload(file: File) {
     console.log('file', file);
@@ -34,5 +34,9 @@ export class FileManagementComponent implements OnInit {
 
   onProcessFileData(uploadedFile: UploadedFile): void {
     this.fileManagerService.processFileData(uploadedFile);
+  }
+
+  onRequestReportDownload(fileIndex: number): void {
+    this.fileManagerService.downloadReport(fileIndex);
   }
 }

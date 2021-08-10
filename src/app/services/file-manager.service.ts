@@ -56,4 +56,8 @@ export class FileManagerService {
   findUploadedFileIndexById(fileId: number): number {
     return this.uploadedFiles.findIndex(file => file.id === fileId);
   }
+
+  downloadReport(fileIndex: number): void {
+    this.reportBuilderService.downloadCSVFromJson(this.uploadedFiles[fileIndex]);
+  }
 }

@@ -11,10 +11,11 @@ export class FilesListComponent implements OnInit {
   @Input() uploadedFiles!: UploadedFile[] | null;
   @Output() fileDelete = new EventEmitter<number>();
   @Output() processFileData = new EventEmitter<UploadedFile>();
+  @Output() requestReportDownload = new EventEmitter<number>();
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   onFileDelete(fileIndex: number) {
     this.fileDelete.emit(fileIndex);
@@ -22,5 +23,9 @@ export class FilesListComponent implements OnInit {
 
   onProcessFileData(uploadedFile: UploadedFile): void {
     this.processFileData.emit(uploadedFile);
+  }
+
+  onRequestReportDownload(fileIndex: number): void {
+    this.requestReportDownload.emit(fileIndex);
   }
 }
