@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, pipe } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { ProcessedFile } from '../models/processed-file.model';
 import { UploadedFile } from '../models/uploaded-file.model';
 import { ReportBuilderService } from './report-builder.service';
 
@@ -17,12 +19,13 @@ export class FileManagerService {
 
   constructor(
     private reportBuilderService: ReportBuilderService,
-  ) {}
+  ) { }
 
   addNewFile(file: File): void {
     const newFile: UploadedFile = {
       id: Date.now(),
       file: file,
+      hasReportAvailable: false,
     };
     this.uploadedFiles.push(newFile);
     this.uploadedFilesSource.next(this.uploadedFiles);
@@ -34,6 +37,23 @@ export class FileManagerService {
   }
 
   processFileData(uploadedFile: UploadedFile) {
-   this.reportBuilderService.getExpensesReport(uploadedFile.file);
+    this.reportBuilderService
+      .getExpensesReport(uploadedFile)
+      .pipe(
+        take(1)
+      )
+      .subscribe(
+        (processedFile: ProcessedFile) => {
+          const fileIndex = this.findUploadedFileIndexById(processedFile.uploadedFileId);
+          if (fileIndex !== -1) {
+            this.uploadedFiles[fileIndex].hasReportAvailable = true;
+            this.uploadedFilesSource.next(this.uploadedFiles);
+          }
+        }
+      )
+  }
+
+  findUploadedFileIndexById(fileId: number): number {
+    return this.uploadedFiles.findIndex(file => file.id === fileId);
   }
 }

@@ -1,22 +1,25 @@
 import { Injectable } from '@angular/core';
 import * as Papa from 'papaparse';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { ProcessedFile } from '../models/processed-file.model';
+import { UploadedFile } from '../models/uploaded-file.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReportBuilderService {
-  private processedFileResult = new Subject<Papa.ParseResult<object>>();
+  private processedFiles: ProcessedFile[] = [];
 
-  public processedFile$ = this.processedFileResult.asObservable();
+  private currentProcessedFileSource = new Subject<ProcessedFile>();
+
+  public currentProcessedFile$ = this.currentProcessedFileSource.asObservable();
 
   constructor() { }
 
-  getExpensesReport(file: File) {
-    console.log('Creating report for file ', file.name);
-    let reader: FileReader = new FileReader();
+  getExpensesReport(uploadedFile: UploadedFile): Observable<ProcessedFile> {
+    console.log('Creating report for file ', uploadedFile.file.name);
 
-    Papa.parse(file, {
+    Papa.parse(uploadedFile.file, {
       // worker: true,
       header: true,
       skipEmptyLines: 'greedy',
@@ -29,15 +32,16 @@ export class ReportBuilderService {
       }, */
       complete: (results: Papa.ParseResult<object>, file: File) => {
         console.log("Parsing complete:", results, file);
-        this.processedFileResult.next(results);
+        const newProcessedFile: ProcessedFile = {
+          uploadedFileId: uploadedFile.id,
+          papaParseResult: results
+        }
+        this.processedFiles.push(newProcessedFile);
+        this.currentProcessedFileSource.next(newProcessedFile);
       }
     });
 
-    this.processedFile$.subscribe(
-      (csvParser: Papa.ParseResult<object>) => {
-        this.downloadCSVFromJson('usersClone.csv', csvParser);
-      }
-    )
+    return this.currentProcessedFile$;
   }
 
   downloadCSVFromJson(filename: string, csvParserResult: Papa.ParseResult<object>) {

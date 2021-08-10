@@ -14,3 +14,10 @@
 >
   <mat-icon>data_exploration</mat-icon>
 </button>
+<button
+  *ngIf="fileInfo.hasReportAvailable"
+  mat-mini-fab
+  color="primary"
+>
+  <mat-icon>file_download</mat-icon>
+</button>
