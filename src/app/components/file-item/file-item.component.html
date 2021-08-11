@@ -10,6 +10,7 @@
 <button
   mat-mini-fab
   color="primary"
+  [disabled]="fileInfo.hasReportAvailable"
   (click)="onProcessFileData()"
 >
   <mat-icon>data_exploration</mat-icon>

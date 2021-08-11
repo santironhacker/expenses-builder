@@ -38,20 +38,22 @@ export class FileManagerService {
   }
 
   processFileData(uploadedFile: UploadedFile) {
-    this.reportBuilderService
-      .getExpensesReport(uploadedFile)
-      .pipe(
-        take(1)
-      )
-      .subscribe(
-        (processedFile: ProcessedFile) => {
-          const fileIndex = this.findUploadedFileIndexById(processedFile.uploadedFileId);
-          if (fileIndex !== -1) {
-            this.uploadedFiles[fileIndex].hasReportAvailable = true;
-            this.uploadedFilesSource.next(this.uploadedFiles);
+    if (!uploadedFile.hasReportAvailable) {
+      this.reportBuilderService
+        .getExpensesReport(uploadedFile)
+        .pipe(
+          take(1)
+        )
+        .subscribe(
+          (processedFile: ProcessedFile) => {
+            const fileIndex = this.findUploadedFileIndexById(processedFile.uploadedFileId);
+            if (fileIndex !== -1) {
+              this.uploadedFiles[fileIndex].hasReportAvailable = true;
+              this.uploadedFilesSource.next(this.uploadedFiles);
+            }
           }
-        }
-      )
+        )
+    }
   }
 
   findUploadedFileIndexById(fileId: number): number {
