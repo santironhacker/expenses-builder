@@ -9,12 +9,12 @@ import { ReportBuilderService } from './report-builder.service';
   providedIn: 'root',
 })
 export class FileManagerService {
-  private uploadedFiles: UploadedFile[] = [];
+  private static readonly ACCEPTED_FILE_FORMATS = [];
 
+  private uploadedFiles: UploadedFile[] = [];
   private uploadedFilesSource = new BehaviorSubject<UploadedFile[]>(
     this.uploadedFiles
   );
-
   public uploadedFiles$ = this.uploadedFilesSource.asObservable();
 
   constructor(

@@ -8,6 +8,7 @@ import { FileManagementComponent } from './components/file-management/file-manag
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 import { FilesListComponent } from './components/files-list/files-list.component';
 import { FileItemComponent } from './components/file-item/file-item.component';
 
@@ -24,7 +25,8 @@ import { FileItemComponent } from './components/file-item/file-item.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

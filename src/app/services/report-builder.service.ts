@@ -3,14 +3,12 @@ import * as Papa from 'papaparse';
 import { Observable, Subject } from 'rxjs';
 import { ProcessedFile } from '../models/processed-file.model';
 import { UploadedFile } from '../models/uploaded-file.model';
+import { Constants } from '../shared/constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReportBuilderService {
-  private static readonly EXTENSION_SEPARATOR = '.';
-  private static readonly CSV = 'csv';
-
   private processedFiles: ProcessedFile[] = [];
   private currentProcessedFileSource = new Subject<ProcessedFile>();
   public currentProcessedFile$ = this.currentProcessedFileSource.asObservable();
@@ -57,9 +55,9 @@ export class ReportBuilderService {
       }, {});
 
       // Create link and download
-      const extensionIndex = uploadedFile.file.name.indexOf(ReportBuilderService.EXTENSION_SEPARATOR);
+      const extensionIndex = uploadedFile.file.name.indexOf(Constants.EXTENSION_SEPARATOR);
       const originalFilename = uploadedFile.file.name.slice(0, extensionIndex);
-      const filename = `${originalFilename}-copy${ReportBuilderService.EXTENSION_SEPARATOR}${ReportBuilderService.CSV}`;
+      const filename = `${originalFilename}-copy${Constants.EXTENSION_SEPARATOR}${Constants.CSV}`;
       var link = document.createElement('a');
       link.setAttribute('href', 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURIComponent(csv));
       link.setAttribute('download', filename);
