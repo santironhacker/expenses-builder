@@ -70,6 +70,13 @@ export class ReportBuilderService {
     }
   };
 
+  removeProcessedFile(uploadedFile: UploadedFile): void {
+    const processedFileIndex = this.findProcessedFileIndexById(uploadedFile.id);
+    if (processedFileIndex !== -1) {
+      this.processedFiles.splice(processedFileIndex, 1);
+    }
+  }
+
   findProcessedFileById(fileId: number): ProcessedFile | undefined {
     return this.processedFiles.find(file => file.uploadedFileId === fileId);
   }

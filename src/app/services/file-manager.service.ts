@@ -32,6 +32,7 @@ export class FileManagerService {
   }
 
   removeFile(fileIndex: number): void {
+    this.reportBuilderService.removeProcessedFile(this.uploadedFiles[fileIndex]);
     this.uploadedFiles.splice(fileIndex, 1);
     this.uploadedFilesSource.next(this.uploadedFiles);
   }
