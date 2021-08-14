@@ -10,6 +10,7 @@ import { FileManagerService } from 'src/app/services/file-manager.service';
 })
 export class FileManagementComponent implements OnInit {
   uploadedFiles$: Observable<UploadedFile[] | null>;
+  fileHeadersPreview$!: Observable<string[] | null>;
 
   constructor(private fileManagerService: FileManagerService) {
     this.uploadedFiles$ = this.fileManagerService.uploadedFiles$;
@@ -33,6 +34,10 @@ export class FileManagementComponent implements OnInit {
   }
 
   onProcessFileData(uploadedFile: UploadedFile): void {
+    // Check headers
+    this.fileHeadersPreview$ = this.fileManagerService.checkHeaders(uploadedFile);
+
+    // Process File
     this.fileManagerService.processFileData(uploadedFile);
   }
 

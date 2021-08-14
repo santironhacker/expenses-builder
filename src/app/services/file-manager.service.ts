@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, pipe } from 'rxjs';
+import { BehaviorSubject, Observable, pipe } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { ProcessedFile } from '../models/processed-file.model';
 import { UploadedFile } from '../models/uploaded-file.model';
@@ -35,6 +35,13 @@ export class FileManagerService {
     this.reportBuilderService.removeProcessedFile(this.uploadedFiles[fileIndex]);
     this.uploadedFiles.splice(fileIndex, 1);
     this.uploadedFilesSource.next(this.uploadedFiles);
+  }
+
+  checkHeaders(uploadedFile: UploadedFile): Observable<string[]> {
+    return this.reportBuilderService.checkHeaders(uploadedFile)
+      .pipe(
+        take(1)
+      )
   }
 
   processFileData(uploadedFile: UploadedFile) {
