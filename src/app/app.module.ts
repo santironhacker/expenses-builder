@@ -9,8 +9,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
 import { FilesListComponent } from './components/files-list/files-list.component';
 import { FileItemComponent } from './components/file-item/file-item.component';
+import { ExpensesBuilderDialogComponent } from './components/expenses-builder-dialog/expenses-builder-dialog.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import { FileItemComponent } from './components/file-item/file-item.component';
     UploadButtonComponent,
     FileManagementComponent,
     FilesListComponent,
-    FileItemComponent
+    FileItemComponent,
+    ExpensesBuilderDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -27,6 +30,7 @@ import { FileItemComponent } from './components/file-item/file-item.component';
     MatIconModule,
     MatCardModule,
     MatDialogModule,
+    MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
