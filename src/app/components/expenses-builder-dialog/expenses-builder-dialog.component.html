@@ -1,5 +1,12 @@
 <h1 mat-dialog-title>{{ dData.title?.titleText }}</h1>
-<div mat-dialog-content>{{ dData.content?.contentText }}</div>
+<div mat-dialog-content>
+  {{ dData.content?.contentText }}
+  <eb-form-table-content
+    *ngIf="dData.content?.formTable"
+    [dataSource]="dData.content.formTable.dataSource"
+    [displayedColumns]="dData.content.formTable.displayedColumns"
+  ></eb-form-table-content>
+</div>
 <div mat-dialog-actions>
   <button mat-button (click)="onCloseDialog()">
     {{ dData.closeBtn?.closeBtnText }}
