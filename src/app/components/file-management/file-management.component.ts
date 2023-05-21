@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { EBDialogData } from 'src/app/models/eb-dialog/eb-dialog-data.model';
-import { SimpleDialogData } from 'src/app/models/simple-dialog-data.model';
 import { UploadedFile } from 'src/app/models/uploaded-file.model';
 import { FileManagerService } from 'src/app/services/file-manager.service';
 import { ExpensesBuilderDialogComponent } from '../expenses-builder-dialog/expenses-builder-dialog.component';
-import { SimpleDialog } from '../simple-dialog/simple-dialog.component';
+import { FormTableUtils } from '../expenses-builder-dialog/form-table-content/form-table-utils';
 
 @Component({
   selector: 'eb-file-management',
@@ -60,17 +59,26 @@ export class FileManagementComponent implements OnInit {
   }
 
   private openValidateFileHeadersDialog(fileHeaders: string[]) {
+    let editableHeaders: string[] = fileHeaders;
+    editableHeaders.push('edit');
     const dialogData: EBDialogData = {
       title: {
-        titleText: 'Invalid file type',
+        titleText: 'File headers detected',
       },
       content: {
-        contentText: `Please insert a valid file type among the following: ${fileHeaders}`,
+        contentText: `The software has identified the following headers. Please, check and validate them. You can reword columns by clicking on the cells.`,
+        formTable: {
+          dataSource: FormTableUtils.includeEditColumn([FormTableUtils.convertHeadersToCellObject(fileHeaders)]),
+          displayedColumns: editableHeaders
+        }
       },
       closeBtn: {
         closeBtnText: 'Cancel',
+      },
+      confirmBtn: {
+        confirmBtnText: 'Validate headers',
       }
-    }
+    } as EBDialogData;
     this.dialog.open(ExpensesBuilderDialogComponent, {
       data: {
         ...dialogData

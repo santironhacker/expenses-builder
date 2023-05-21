@@ -7,7 +7,7 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
   templateUrl: './form-table-content.component.html',
   styleUrls: ['./form-table-content.component.scss']
 })
-export class FormTableContent implements OnInit {
+export class FormTableContentComponent implements OnInit {
   @Input() dataSource: Array<any> = [];
   @Input() displayedColumns: Array<string> = [];
   formArray!: FormArray;

@@ -15,7 +15,7 @@ import { EditModeDirective } from './components/expenses-builder-dialog/form-tab
 import { EditOnEnterDirective } from './components/expenses-builder-dialog/form-table-content/editable-cell/edit-on-enter.directive';
 import { EditableCellComponent } from './components/expenses-builder-dialog/form-table-content/editable-cell/editable-cell.component';
 import { ViewModeDirective } from './components/expenses-builder-dialog/form-table-content/editable-cell/view-mode.directive';
-import { FormTableContent } from './components/expenses-builder-dialog/form-table-content/form-table-content.component';
+import { FormTableContentComponent } from './components/expenses-builder-dialog/form-table-content/form-table-content.component';
 import { FileItemComponent } from './components/file-item/file-item.component';
 import { FileManagementComponent } from './components/file-management/file-management.component';
 import { FilesListComponent } from './components/files-list/files-list.component';
@@ -29,7 +29,7 @@ import { UploadButtonComponent } from './components/upload-button/upload-button.
     FilesListComponent,
     FileItemComponent,
     ExpensesBuilderDialogComponent,
-    FormTableContent,
+    FormTableContentComponent,
     EditableCellComponent,
     EditModeDirective,
     ViewModeDirective

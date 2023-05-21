@@ -1,14 +1,19 @@
 export interface EBDialogData {
-  title?: {
-    titleText?: string;
+  title: {
+    titleText: string;
   }
-  content?: {
-    formTable?: {
+  content: {
+    formTable: {
+      dataSource: Array<any>,
+      displayedColumns: Array<any>
       toComplete: string;
     }
-    contentText?: string;
+    contentText: string;
   },
-  closeBtn?: {
+  closeBtn: {
     closeBtnText?: string;
+  },
+  confirmBtn?: {
+    confirmBtnText?: string;
   };
 }
