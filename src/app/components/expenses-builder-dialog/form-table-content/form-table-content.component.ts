@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 "@angular/core";
 
@@ -8,15 +8,16 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./form-table-content.component.scss']
 })
 export class FormTableContentComponent implements OnInit {
-  @Input() dataSource: Array<any> = [];
-  @Input() displayedColumns: Array<string> = [];
+  @Input() dataSource: Array<any> | undefined = [];
+  @Input() displayedColumns: Array<string> | undefined = [];
+  @Output() updatedField: EventEmitter<{ rowIndex: number, field: string, value: string | number }> = new EventEmitter();
   formArray!: FormArray;
 
   ngOnInit() {
-    if (!this.dataSource) {
+    if (!this.dataSource && this.displayedColumns) {
       this.dataSource = this.buildDataSourceFromHeadersArray(this.displayedColumns);
     }
-    const formGroups = this.buildFormGroupsFromDataSource(this.dataSource);
+    const formGroups = this.buildFormGroupsFromDataSource(this.dataSource!);
     this.formArray = new FormArray(
       formGroups,
       { updateOn: "blur" }
@@ -77,7 +78,7 @@ export class FormTableContentComponent implements OnInit {
     * @param rowIndex
     * @param colName
     */
-  updateField(rowIndex: any, field: any) {
+  /* updateField(rowIndex: number, field: string) {
     const control = this.getControl(rowIndex, field);
     if (control.valid) {
       this.dataSource = this.dataSource.map((e, i) => {
@@ -89,6 +90,13 @@ export class FormTableContentComponent implements OnInit {
         }
         return e;
       });
+    }
+  } */
+
+  onUpdateField(rowIndex: number, field: string) {
+    const control = this.getControl(rowIndex, field);
+    if (control.valid) {
+      this.updatedField.emit({ rowIndex, field, value: control.value });
     }
   }
 }

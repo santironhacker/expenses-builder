@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { EbDialogClosingResults } from 'src/app/models/eb-dialog/eb-dialog-closing-results';
 import { EBDialogData } from 'src/app/models/eb-dialog/eb-dialog-data.model';
 import { UploadedFile } from 'src/app/models/uploaded-file.model';
 import { FileManagerService } from 'src/app/services/file-manager.service';
@@ -41,26 +43,36 @@ export class FileManagementComponent implements OnInit {
   }
 
   onProcessFileData(uploadedFile: UploadedFile): void {
-    // Check headers
-    // this.fileHeadersPreview$ =
     this.fileManagerService.checkHeaders(uploadedFile)
+      .pipe(
+        switchMap(
+          (fileHeaders: string[]) => {
+            return this.openValidateFileHeadersDialog(fileHeaders, uploadedFile.id);
+          }
+        )
+      )
       .subscribe(
-        (fileHeaders: string[]) => {
-          this.openValidateFileHeadersDialog(fileHeaders);
+        (ebDialogClosingResults: EbDialogClosingResults) => {
+          if (ebDialogClosingResults.isConfirmAction) {
+            // Process File
+            this.fileManagerService.processFileData(uploadedFile);
+          }
+          // console.log(`Dialog result: ${dialogResults.result}`);
+          // console.log(`Scope of fileId: ${fileId}`);
+          // const updatedUploadedFile: UploadedFile = {
+          //     ...uploadedFiles,
+          // }
         }
       )
-
-    // Process File
-    // this.fileManagerService.processFileData(uploadedFile);
   }
 
   onRequestReportDownload(fileIndex: number): void {
     this.fileManagerService.downloadReport(fileIndex);
   }
 
-  private openValidateFileHeadersDialog(fileHeaders: string[]) {
+  private openValidateFileHeadersDialog(fileHeaders: string[], fileId: number): Observable<EbDialogClosingResults> {
     let editableHeaders: string[] = fileHeaders;
-    editableHeaders.push('edit');
+    // editableHeaders.push('edit');
     const dialogData: EBDialogData = {
       title: {
         titleText: 'File headers detected',
@@ -78,11 +90,19 @@ export class FileManagementComponent implements OnInit {
       confirmBtn: {
         confirmBtnText: 'Validate headers',
       }
-    } as EBDialogData;
-    this.dialog.open(ExpensesBuilderDialogComponent, {
+    };
+
+    const dialogRef = this.dialog.open(ExpensesBuilderDialogComponent, {
       data: {
         ...dialogData
       }
     });
+
+    return dialogRef.afterClosed()
+      .pipe(
+        map((ebDialogClosingResults: EbDialogClosingResults) => {
+          return ebDialogClosingResults;
+        })
+      )
   }
 }

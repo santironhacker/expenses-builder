@@ -1,4 +1,6 @@
 export interface EbDialogClosingResults {
   isConfirmAction: boolean;
-  result?: any;
+  result?: {
+    dataSource?: object
+  };
 }

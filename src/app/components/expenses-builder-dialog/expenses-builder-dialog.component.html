@@ -3,8 +3,9 @@
   {{ dData.content?.contentText }}
   <eb-form-table-content
     *ngIf="dData.content?.formTable"
-    [dataSource]="dData.content.formTable.dataSource"
-    [displayedColumns]="dData.content.formTable.displayedColumns"
+    [dataSource]="dData.content.formTable?.dataSource"
+    [displayedColumns]="dData.content.formTable?.displayedColumns"
+    (updatedField)="onUpdatedFormField($event)"
   ></eb-form-table-content>
 </div>
 <div mat-dialog-actions>

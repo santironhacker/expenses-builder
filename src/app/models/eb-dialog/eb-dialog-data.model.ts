@@ -1,12 +1,11 @@
 export interface EBDialogData {
   title: {
     titleText: string;
-  }
+  },
   content: {
-    formTable: {
-      dataSource: Array<any>,
-      displayedColumns: Array<any>
-      toComplete: string;
+    formTable?: {
+      dataSource?: Array<any>,
+      displayedColumns?: Array<any>,
     }
     contentText: string;
   },
@@ -15,5 +14,5 @@ export interface EBDialogData {
   },
   confirmBtn?: {
     confirmBtnText?: string;
-  };
+  }
 }
